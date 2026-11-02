@@ -27,7 +27,7 @@ const loginSchema = z.object({
 // Compared against when the email is unknown, so response time does not reveal which emails exist.
 const DUMMY_HASH = bcrypt.hashSync('not-a-real-password', 10);
 
-const publicUser = (u) => ({ id: String(u._id), name: u.name, email: u.email, role: u.role });
+const publicUser = (u) => ({ id: String(u._id), name: u.name, email: u.email, role: u.role, team: u.team });
 
 router.post('/login', loginLimiter, validate(loginSchema), async (req, res, next) => {
   try {

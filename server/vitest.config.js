@@ -3,6 +3,9 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     environment: 'node',
+    fileParallelism: false, // DB-backed test files share one test database
+    testTimeout: 30000,
+    hookTimeout: 60000,
     env: {
       NODE_ENV: 'test',
       MONGODB_URI: 'mongodb://localhost:27017/resort_test',

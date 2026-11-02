@@ -12,6 +12,7 @@ export const validate =
       }));
       return next(new AppError(400, 'VALIDATION', 'Please check the highlighted fields', details));
     }
-    req[source] = result.data;
+    // Express 5 makes req.query a read-only getter, so define the parsed value explicitly.
+    Object.defineProperty(req, source, { value: result.data, writable: true, configurable: true, enumerable: true });
     next();
   };

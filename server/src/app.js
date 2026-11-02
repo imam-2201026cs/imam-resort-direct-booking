@@ -7,6 +7,7 @@ import { requireCustomHeader } from './middleware/csrf.js';
 import { notFound, errorHandler } from './middleware/errors.js';
 import healthRouter from './routes/health.js';
 import authRouter from './routes/auth.js';
+import roomsRouter from './routes/rooms.js';
 
 export function createApp() {
   const app = express();
@@ -21,6 +22,7 @@ export function createApp() {
 
   app.use('/api/health', healthRouter);
   app.use('/api/auth', authRouter);
+  app.use('/api', roomsRouter);
 
   app.use(notFound);
   app.use(errorHandler);
