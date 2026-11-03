@@ -15,9 +15,9 @@ export const verifyToken = (token) =>
 
 export const cookieOptions = () => ({
   httpOnly: true,
-  secure: isProd,
-  // Client (Vercel) and API (Render) are different sites in production.
-  sameSite: isProd ? 'none' : 'lax',
+  secure: isProd || env.COOKIE_SAMESITE === 'none',
+  // 'lax' when the client proxies /api (same site). 'none' needs Secure and is blocked by some browsers' third-party cookie rules.
+  sameSite: env.COOKIE_SAMESITE,
   maxAge: TTL_SECONDS * 1000,
   path: '/',
 });
