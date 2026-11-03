@@ -139,7 +139,7 @@ export async function payBooking({ reference, email, method, testCase }) {
       $unset: { holdExpiresAt: 1 },
       $inc: { 'payment.attempts': 1 },
     },
-    { new: true },
+    { returnDocument: 'after' },
   ).lean();
   if (!updated) throw await expiredErr();
   return updated;
@@ -152,7 +152,7 @@ export async function cancelBooking(reference) {
     const b = await Booking.findOneAndUpdate(
       { reference: String(reference).toUpperCase(), status: { $in: ['held', 'confirmed'] } },
       { $set: { status: 'cancelled', cancelledAt: new Date() }, $unset: { holdExpiresAt: 1 } },
-      { session, new: true },
+      { session, returnDocument: 'after' },
     ).lean();
     if (b) {
       await release(b, session);

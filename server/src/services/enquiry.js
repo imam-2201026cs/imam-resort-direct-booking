@@ -14,7 +14,7 @@ export function decideLane(category, confidence, threshold) {
 }
 
 async function nextReference() {
-  const c = await Config.findOneAndUpdate({ key: 'enquirySeq' }, { $inc: { value: 1 } }, { upsert: true, new: true }).lean();
+  const c = await Config.findOneAndUpdate({ key: 'enquirySeq' }, { $inc: { value: 1 } }, { upsert: true, returnDocument: 'after' }).lean();
   return `ENQ-${String(c.value).padStart(4, '0')}`;
 }
 
