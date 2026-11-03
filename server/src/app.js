@@ -10,6 +10,8 @@ import authRouter from './routes/auth.js';
 import roomsRouter from './routes/rooms.js';
 import bookingsRouter from './routes/bookings.js';
 import adminRouter from './routes/admin.js';
+import enquiriesRouter from './routes/enquiries.js';
+import adminEnquiriesRouter from './routes/adminEnquiries.js';
 
 export function createApp() {
   const app = express();
@@ -26,6 +28,8 @@ export function createApp() {
   app.use('/api/auth', authRouter);
   app.use('/api', roomsRouter);
   app.use('/api', bookingsRouter);
+  app.use('/api', enquiriesRouter);
+  app.use('/api/admin', adminEnquiriesRouter);
   app.use('/api/admin', adminRouter);
 
   app.use(notFound);

@@ -7,6 +7,9 @@ const schema = z.object({
   MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
   CLIENT_ORIGIN: z.string().url().default('http://localhost:5173'),
+  // Optional: without a key the enquiry router uses deterministic rules instead of an LLM.
+  ANTHROPIC_API_KEY: z.string().optional().transform((v) => v || undefined),
+  AI_MODEL: z.string().optional().transform((v) => v || 'claude-haiku-5-5'),
 });
 
 const parsed = schema.safeParse(process.env);

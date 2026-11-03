@@ -135,7 +135,8 @@ const enquiry = new Schema(
     sentReply: String,
     status: { type: String, enum: ['new', 'in_progress', 'replied', 'closed'], default: 'new' },
     gmAlert: { type: Boolean, default: false },
-    events: [{ _id: false, at: Date, by: String, type: String, detail: String }],
+    // `type` is a reserved key in Mongoose schemas, so it must be declared as { type: String }.
+    events: [{ _id: false, at: Date, by: String, type: { type: String }, detail: String }],
     firstResponseAt: Date,
   },
   { timestamps: true },
