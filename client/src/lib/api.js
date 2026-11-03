@@ -10,7 +10,7 @@ export class ApiError extends Error {
 }
 
 /** Thin fetch wrapper: cookies, the CSRF header, and normalised errors. */
-export async function api(path, { method = 'GET', body, signal } = {}) {
+export async function api(path, { method = 'GET', body, signal, headers } = {}) {
   let res;
   try {
     res = await fetch(`${BASE}/api${path}`, {
@@ -19,6 +19,7 @@ export async function api(path, { method = 'GET', body, signal } = {}) {
       signal,
       headers: {
         'X-Requested-With': 'resort-web',
+        ...headers,
         ...(body ? { 'Content-Type': 'application/json' } : {}),
       },
       body: body ? JSON.stringify(body) : undefined,
