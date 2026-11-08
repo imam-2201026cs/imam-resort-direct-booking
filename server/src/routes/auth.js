@@ -36,15 +36,15 @@ router.post('/login', loginLimiter, validate(loginSchema), async (req, res, next
     const ok = await bcrypt.compare(password, user?.passwordHash ?? DUMMY_HASH);
     if (!user || !ok) throw new AppError(401, 'BAD_CREDENTIALS', 'Incorrect email or password');
 
-    res.cookie(COOKIE_NAME, signToken(user), cookieOptions());
+    res.cookie(COOKIE_NAME, signToken(user), cookieOptions(req));
     res.json({ user: publicUser(user) });
   } catch (err) {
     next(err);
   }
 });
 
-router.post('/logout', (_req, res) => {
-  res.clearCookie(COOKIE_NAME, { ...cookieOptions(), maxAge: undefined });
+router.post('/logout', (req, res) => {
+  res.clearCookie(COOKIE_NAME, { ...cookieOptions(req), maxAge: undefined });
   res.status(204).end();
 });
 

@@ -13,11 +13,15 @@ export const signToken = (user) =>
 export const verifyToken = (token) =>
   jwt.verify(token, env.JWT_SECRET, { algorithms: ['HS256'] });
 
-export const cookieOptions = () => ({
-  httpOnly: true,
-  secure: isProd || env.COOKIE_SAMESITE === 'none',
-  // 'lax' when the client proxies /api (same site). 'none' needs Secure and is blocked by some browsers' third-party cookie rules.
-  sameSite: env.COOKIE_SAMESITE,
-  maxAge: TTL_SECONDS * 1000,
-  path: '/',
-});
+export const cookieOptions = (req) => {
+  const origin = req?.headers?.origin;
+  const isCrossSite = Boolean(origin && !origin.includes('localhost') && !origin.includes('127.0.0.1'));
+  const sameSite = isCrossSite || env.COOKIE_SAMESITE === 'none' ? 'none' : env.COOKIE_SAMESITE;
+  return {
+    httpOnly: true,
+    secure: isProd || sameSite === 'none',
+    sameSite,
+    maxAge: TTL_SECONDS * 1000,
+    path: '/',
+  };
+};

@@ -6,7 +6,7 @@ const schema = z.object({
   PORT: z.coerce.number().int().positive().default(4000),
   MONGODB_URI: z.string().min(1, 'MONGODB_URI is required'),
   JWT_SECRET: z.string().min(32, 'JWT_SECRET must be at least 32 characters'),
-  CLIENT_ORIGIN: z.string().url().default('http://localhost:5173'),
+  CLIENT_ORIGIN: z.string().default('http://localhost:5173'),
   // 'lax' works when the client proxies /api (recommended). Use 'none' only if client and API are on different sites.
   COOKIE_SAMESITE: z.enum(['lax', 'strict', 'none']).default('lax'),
   // Optional: without a key the enquiry router uses deterministic rules instead of an LLM.
