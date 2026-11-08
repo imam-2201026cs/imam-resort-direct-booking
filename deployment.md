@@ -1,7 +1,7 @@
 # Deployment guide
 
-Repository: https://github.com/imam-2201026cs/imam-resort-direct-booking  
-Live app: https://client-psi-ashy.vercel.app (API: https://imam-resort-direct-booking.onrender.com, database on MongoDB Atlas)
+Repository: `<PASTE YOUR GITHUB URL HERE>`  
+Live app: `<PASTE VERCEL URL HERE>` (API on Render, database on MongoDB Atlas)
 
 ## 1. Run it locally
 

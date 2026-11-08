@@ -1,7 +1,7 @@
 # Technical Design Document: Direct-booking website with AI enquiry routing
 
-**GitHub:** https://github.com/imam-2201026cs/imam-resort-direct-booking  
-**Live app:** https://client-psi-ashy.vercel.app (API: https://imam-resort-direct-booking.onrender.com)  
+**GitHub:** `<PASTE GITHUB URL HERE>`  
+**Live app:** `<PASTE LIVE URL HERE>`  
 **Client brief:** Company A, a 76-key coffee-estate resort in Chikkamagaluru (brief #4)  
 **Author:** Imam Hassnain Khan
 
