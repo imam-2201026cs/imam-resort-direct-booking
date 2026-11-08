@@ -8,9 +8,10 @@ import Rates from './Rates.jsx';
 import Bookings from './Bookings.jsx';
 
 const DEMO = [
+  { label: 'General Manager (Imam)', email: 'imam.gm@resort.example' },
   { label: 'Reservations', email: 'reservations@resort.example' },
   { label: 'Sales', email: 'sales@resort.example' },
-  { label: 'General Manager', email: 'gm@resort.example' },
+  { label: 'GM (Meera)', email: 'gm@resort.example' },
 ];
 const DEMO_PASSWORD = 'Resort#Demo2026'; // synthetic demo account, see deployment.md
 const showDemo = import.meta.env.VITE_SHOW_DEMO_LOGINS !== 'false';
@@ -19,28 +20,74 @@ function Login() {
   useTitle('Staff sign-in');
   const { login } = useAuth();
   const [f, setF] = useState({ email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
   async function submit(e) {
     e.preventDefault();
     setBusy(true); setErr('');
-    try { await login(f.email, f.password); } catch (x) { setErr(x.message); } finally { setBusy(false); }
+    try { await login(f.email.trim(), f.password); } catch (x) { setErr(x.message); } finally { setBusy(false); }
   }
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-12">
       <Link to="/" className="font-display text-xl font-semibold text-moss-800">Company A Resort</Link>
       <h1 className="mt-6 text-3xl">Staff sign-in</h1>
       <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
-        <Field label="Email" htmlFor="email"><Input id="email" type="email" autoComplete="username" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} /></Field>
-        <Field label="Password" htmlFor="pw"><Input id="pw" type="password" autoComplete="current-password" value={f.password} onChange={(e) => setF({ ...f, password: e.target.value })} /></Field>
+        <Field label="Email" htmlFor="email">
+          <Input
+            id="email"
+            type="email"
+            autoComplete="username"
+            value={f.email}
+            onChange={(e) => setF({ ...f, email: e.target.value })}
+            placeholder="imam.gm@resort.example"
+          />
+        </Field>
+        <Field label="Password" htmlFor="pw">
+          <div className="relative">
+            <Input
+              id="pw"
+              type={showPassword ? 'text' : 'password'}
+              autoComplete="current-password"
+              value={f.password}
+              onChange={(e) => setF({ ...f, password: e.target.value })}
+              className="pr-16"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded px-2 py-1 text-xs font-medium text-moss-700 hover:text-moss-900 focus:outline-none"
+            >
+              {showPassword ? 'Hide' : 'Show'}
+            </button>
+          </div>
+        </Field>
         {err && <Notice tone="error">{err}</Notice>}
         <Button type="submit" loading={busy} className="w-full">Sign in</Button>
       </form>
       {showDemo && (
         <div className="mt-8 rounded-lg border border-line bg-white p-4 text-sm">
           <p className="font-medium">Demo accounts for the reviewer</p>
-          <p className="mt-1 text-muted">Synthetic users. Pick one to fill the form.</p>
-          <div className="mt-3 flex flex-wrap gap-2">{DEMO.map((d) => <Button key={d.email} size="sm" variant="secondary" onClick={() => setF({ email: d.email, password: DEMO_PASSWORD })}>{d.label}</Button>)}</div>
+          <p className="mt-1 text-muted">
+            Click any button below to auto-fill the form (password is{' '}
+            <code className="rounded bg-moss-50 px-1.5 py-0.5 font-mono text-xs font-semibold text-moss-800 select-all">
+              Resort#Demo2026
+            </code>
+            ):
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {DEMO.map((d) => (
+              <Button
+                key={d.email}
+                size="sm"
+                variant="secondary"
+                type="button"
+                onClick={() => setF({ email: d.email, password: DEMO_PASSWORD })}
+              >
+                {d.label}
+              </Button>
+            ))}
+          </div>
         </div>
       )}
     </div>

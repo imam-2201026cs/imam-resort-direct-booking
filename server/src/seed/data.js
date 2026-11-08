@@ -48,6 +48,7 @@ export const USERS = [
   { name: 'Asha Rao', email: 'reservations@resort.example', role: 'staff', team: 'reservations' },
   { name: 'Rohan Gowda', email: 'sales@resort.example', role: 'staff', team: 'sales' },
   { name: 'Meera Nair (GM)', email: 'gm@resort.example', role: 'gm', team: 'gm' },
+  { name: 'Imam (GM)', email: 'imam.gm@resort.example', role: 'gm', team: 'gm' },
 ];
 
 /** Price for a date: weekend +20%, festive peak (20 Dec to 5 Jan) +40%, rounded to the nearest ₹100. */

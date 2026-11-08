@@ -55,5 +55,16 @@ export function RoomPhoto({ room, className = '', priority = false }) {
   const [failed, setFailed] = useState(false);
   const src = room?.photos?.[0];
   if (!src || failed) return <Landscape seed={room?.slug || 'estate'} className={className} />;
-  return <img src={src} alt={`${room.name} at the estate`} width="800" height="500" loading={priority ? 'eager' : 'lazy'} decoding="async" onError={() => setFailed(true)} className={`object-cover ${className}`} />;
+  return (
+    <img
+      src={src}
+      alt={`${room.name} at the estate`}
+      width="800"
+      height="500"
+      loading={priority ? 'eager' : 'lazy'}
+      decoding="async"
+      onError={() => setFailed(true)}
+      className={`object-cover transition-transform duration-700 ease-out hover:scale-[1.03] ${className}`}
+    />
+  );
 }

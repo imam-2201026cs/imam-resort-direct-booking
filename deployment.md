@@ -1,6 +1,6 @@
 # Deployment guide
 
-Repository: `<PASTE YOUR GITHUB URL HERE>`  
+Repository: https://github.com/imam-2201026cs/imam-resort-direct-booking  
 Live app: `<PASTE VERCEL URL HERE>` (API on Render, database on MongoDB Atlas)
 
 ## 1. Run it locally
